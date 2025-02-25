@@ -26,5 +26,12 @@ def suggest_remedy(symptoms):
 @app.route('/get_remedy', methods=['GET'])
 def get_remedy():
     symptoms = request.args.get('symptoms', '').strip()
+    
     if not symptoms:
-        r
+        return jsonify({"error": "No symptoms provided. Please enter symptoms."}), 400
+    
+    remedy = suggest_remedy(symptoms)
+    return jsonify({"remedy": remedy})
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)
